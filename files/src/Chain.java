@@ -8,18 +8,21 @@ public class Chain {
     // Id of Chain
     private final int ID;
 
+    private final String name;
+
     // Boolean for if the Chain has received a new message
     private boolean updatedSinceLastSeen;
 
     // Latest Message sent in Chain
     private Message head;
 
-    public Chain(int id, Message message) {
+    public Chain(int id, String name, Message message) {
         next = null;
         ID = id;
         prev = null;
         updatedSinceLastSeen = false;
         head = message;
+        this.name = name;
     }
 
     public void setNext(Chain next) {
@@ -43,6 +46,10 @@ public class Chain {
 
     public int getID() {
         return ID;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Chain getPrev() {
