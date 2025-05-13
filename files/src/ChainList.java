@@ -6,13 +6,17 @@ public class ChainList {
     // List of pinned chains, before the head chain
     private final ArrayList<Chain> pinned;
 
-    public ChainList(Chain head) {
-        this.head = head;
+    public ChainList() {
+        head = null;
         pinned = new ArrayList<>();
     }
 
     // Adds a Chain to the head of the ChainList
     public void add(Chain newChain) {
+        if(head == null) {
+            head = newChain;
+            return;
+        }
         newChain.setNext(head);
         head.setPrev(newChain);
         head = newChain;
@@ -41,6 +45,10 @@ public class ChainList {
             return true;
         }
         return false;
+    }
+
+    public void setHead(Chain newHead) {
+        head = newHead;
     }
 
     public Chain getHead() {

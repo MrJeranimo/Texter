@@ -16,13 +16,16 @@ public class Chain {
     // Latest Message sent in Chain
     private Message head;
 
-    public Chain(int id, String name, Message message) {
+    private final ChainList chainList;
+
+    public Chain(int id, String name, Message message, ChainList chainList) {
         next = null;
         ID = id;
         prev = null;
-        updatedSinceLastSeen = false;
+        updatedSinceLastSeen = true;
         head = message;
         this.name = name;
+        this.chainList = chainList;
     }
 
     public void setNext(Chain next) {
@@ -38,6 +41,17 @@ public class Chain {
         head.setPrev(newMessage);
         head = newMessage;
         updatedSinceLastSeen = true;
+        if(prev != null) {
+            prev.setNext(next);
+        }
+        if(next != null) {
+            next.setPrev(prev);
+        }
+        Chain chainListHead = chainList.getHead();
+        chainListHead.setPrev(this);
+        next = chainListHead;
+        prev = null;
+        chainList.setHead(this);
     }
 
     public Chain getNext() {
@@ -49,7 +63,11 @@ public class Chain {
     }
 
     public String getName() {
-        return name;
+        if(updatedSinceLastSeen) {
+            return "* " + name;
+        } else {
+            return name;
+        }
     }
 
     public Chain getPrev() {
